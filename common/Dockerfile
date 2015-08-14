@@ -1,9 +1,13 @@
 # Base image of the IPython/Jupyter notebook, with conda
 # Intended to be used in a tmpnb installation
 
-FROM debian:jessie
+FROM danielballan/jessie
 
-MAINTAINER Jupyter Project <jupyter@googlegroups.com>
+MAINTAINER Daniel B Allan at Brookhaven National Lab <dallan@bnl.gov>
+USER root
+
+ENV http_proxy http://proxy:8888
+ENV https_proxy http://proxy:8888
 
 ENV DEBIAN_FRONTEND noninteractive
 
