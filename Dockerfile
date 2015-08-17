@@ -25,7 +25,11 @@ WORKDIR $HOME
 USER jovyan
 
 # Python packages
+RUN conda config --add create_default_packages pip
+RUN conda install anaconda-client --yes
+RUN anaconda config --set url https://conda.nsls2.bnl.gov/api
 RUN conda install --yes numpy pandas scikit-learn scikit-image matplotlib scipy seaborn sympy cython patsy statsmodels cloudpickle dill numba bokeh && conda clean -yt
+RUN conda install -c latest dataportal pims
 
 # Now for a python2 environment
 #RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 ipython numpy pandas scikit-learn scikit-image matplotlib scipy seaborn sympy cython patsy statsmodels cloudpickle dill numba bokeh && conda clean -yt
