@@ -8,6 +8,8 @@ USER root
 ENV http_proxy http://proxy:8888
 ENV https_proxy http://proxy:8888
 
+ADD scikit-xray-examples/demos/ /home/jovyan/scikit-xray-examples/
+RUN rm /home/jovyan/scikit-xray-examples/prepare_for_docker.py
 ADD notebooks/ /home/jovyan/
 ADD datasets/ /home/jovyan/datasets/
 RUN chown -R jovyan:jovyan /home/jovyan
