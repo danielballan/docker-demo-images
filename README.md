@@ -55,3 +55,13 @@ docker build -t jupyter/demo .
 docker build -t jupyter/minimal common/
 ```
 
+#### `jupyter/minimal`
+You will need to run this code snippet before building the docker image
+```
+git clone https://github.com/ericdill/scikit-xray-examples
+cd scikit-xray-examples/demos
+git checkout update-examples
+python prepare_for_docker.py
+cd ../../
+docker build -t danielballan/whatever_that_image_was_named .
+```
