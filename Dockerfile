@@ -8,8 +8,6 @@ USER root
 ENV http_proxy http://proxy:8888
 ENV https_proxy http://proxy:8888
 
-ADD scikit-xray-examples/demos/ /home/jovyan/scikit-xray-examples/
-RUN rm /home/jovyan/scikit-xray-examples/prepare_for_docker.py
 ADD notebooks/ /home/jovyan/
 ADD datasets/ /home/jovyan/datasets/
 RUN chown -R jovyan:jovyan /home/jovyan
@@ -36,6 +34,23 @@ RUN conda install --yes numpy pandas scikit-learn scikit-image matplotlib scipy 
 # Get featured notebooks
 # RUN mkdir /home/jovyan/featured
 # RUN git clone --depth 1 https://github.com/jvns/pandas-cookbook.git /home/jovyan/featured/pandas-cookbook/
+
+# download scikit-xray examples
+RUN mkdir /home/jovyan/git && \
+    cd git  && \
+    git clone https://github.com/ericdill/scikit-xray-examples && \
+    cd scikit-xray-examples && \
+    git checkout update-examples && \
+    cd demos && \
+    # download the data
+    python prepare_for_docker.py && \
+    # move the demos to the notebooks directory
+    rm prepare_for_docker.py
+    cd ../
+    mv demos /home/jovyan/scikit-xray-examples
+    cd ../
+    rm -rf scikit-xray-examples
+
 
 # Convert notebooks to the current format
 RUN find . -name '*.ipynb' -exec ipython nbconvert --to notebook {} --output {} \;
