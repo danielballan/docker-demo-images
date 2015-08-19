@@ -1,6 +1,6 @@
 # Docker demo image, as used on try.jupyter.org and tmpnb.org
 
-FROM danielballan/nsls2-minimal
+FROM ericdill/nsls2-minimal
 
 MAINTAINER Daniel B Allan at Brookhaven National Lab <dallan@bnl.gov>
 USER root

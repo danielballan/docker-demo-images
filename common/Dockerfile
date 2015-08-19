@@ -1,17 +1,27 @@
 # Base image of the IPython/Jupyter notebook, with conda
 # Intended to be used in a tmpnb installation
 
-FROM danielballan/jessie
+FROM debian:8
 
 MAINTAINER Daniel B Allan at Brookhaven National Lab <dallan@bnl.gov>
 USER root
 
-ENV http_proxy http://proxy:8888
-ENV https_proxy http://proxy:8888
+#ENV http_proxy http://proxy:8888
+#ENV https_proxy http://proxy:8888
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get install -y git vim wget build-essential python-dev ca-certificates bzip2 libsm6 && apt-get clean
+RUN apt-get update
+RUN apt-get install -y \
+      git \
+      vim \
+      wget \
+      build-essential \
+      python-dev \
+      ca-certificates \
+      bzip2 \
+      libsm6 && \
+    apt-get clean
 
 ENV CONDA_DIR /opt/conda
 
