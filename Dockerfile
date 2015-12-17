@@ -1,12 +1,12 @@
 # Docker demo image, as used on try.jupyter.org and tmpnb.org
 
-FROM ericdill/nsls2-minimal
+FROM ericdill/bar
 
 MAINTAINER Daniel B Allan at Brookhaven National Lab <dallan@bnl.gov>
 USER root
 
-ENV http_proxy http://proxy:8888
-ENV https_proxy http://proxy:8888
+#ENV http_proxy http://proxy:8888
+#ENV https_proxy http://proxy:8888
 
 ADD notebooks/ /home/jovyan/
 ADD datasets/ /home/jovyan/datasets/
@@ -42,13 +42,14 @@ RUN mkdir /home/jovyan/git && \
     cd scikit-xray-examples && \
     git checkout update-examples && \
     cd demos && \
+    pip install clint && \
     # download the data
     python prepare_for_docker.py && \
     # move the demos to the notebooks directory
-    rm prepare_for_docker.py
-    cd ../
-    mv demos /home/jovyan/scikit-xray-examples
-    cd ../
+    rm prepare_for_docker.py && \
+    cd ../ && \
+    mv demos /home/jovyan/scikit-xray-examples && \
+    cd ../ && \
     rm -rf scikit-xray-examples
 
 
@@ -56,4 +57,5 @@ RUN mkdir /home/jovyan/git && \
 RUN find . -name '*.ipynb' -exec ipython nbconvert --to notebook {} --output {} \;
 RUN find . -name '*.ipynb' -exec ipython trust {} \;
 
-CMD ipython notebook
+RUN echo 'foo'
+#CMD ipython notebook
